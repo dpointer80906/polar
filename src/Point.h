@@ -10,23 +10,26 @@
 // to a vertical axis coordinate.
 class Point {
 
-    std::tuple<float, float> XY;  // x-axis and y-axis coordinates
+    std::tuple<float, float> XY;  // x-axis and y-axis coordinates, only accessed directly by private getter/setter
+
+    std::tuple<float, float> getXY() { return Point::XY; }
+    void setXY(std::tuple<float, float> xy) { Point::XY = xy; }
 
 public:
 
     Point();
-    Point(float, float);
-    Point(std::tuple<float, float>);
+    Point(float x, float y);
+    Point(std::tuple<float, float> xy);
 
     std::tuple<float, float> xy();
-    void xy(float *, float *);
+    void xy(float *x, float *y);
     float x();
     float y();
 
-    void xy(std::tuple<float, float>);
-    void xy(float, float);
-    void x(float);
-    void y(float);
+    void xy(std::tuple<float, float> xy);
+    void xy(float x, float y);
+    void x(float x);
+    void y(float y);
 };
 
 #endif //COORD_POINT_H
