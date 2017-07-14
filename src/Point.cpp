@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Point.h"
 
 // default constructor
@@ -59,4 +60,8 @@ void Point::y(float y) {
     std::tuple<float, float> xy = Point::xy();
     std::get<1>(xy) = y;
     Point::xy(xy);
+}
+
+void Point::print() {
+    std::cout << this->x() << " " << this->y() << std::endl;
 }

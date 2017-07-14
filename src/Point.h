@@ -30,6 +30,8 @@ public:
     void xy(float x, float y);
     void x(float x);
     void y(float y);
+
+    virtual void print();
 };
 
 #endif //COORD_POINT_H
