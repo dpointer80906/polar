@@ -71,6 +71,10 @@ void testVertices() {
     Vertices v1(x, y, angle, front, side);
     v1.print();
     v1.printVertices();
-
-
+    x = 22.3;
+    y = 41.4;
+    angle = 45.0;
+    v1.update(x, y, angle);
+    v1.print();
+    v1.printVertices();
 }

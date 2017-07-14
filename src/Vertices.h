@@ -30,6 +30,8 @@ public:
 
     std::map<std::string, Point> vertices();
 
+    void update(double x, double y, double angle);
+
     void print();
     void printVertices();
 

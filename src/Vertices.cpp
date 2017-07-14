@@ -49,6 +49,14 @@ std::map<std::string, Point> Vertices::vertices() {
     };
 }
 
+void Vertices::update(double x, double y, double angle) {
+    Vertices::polar.x(x);
+    Vertices::polar.y(y);
+    Vertices::polar.angle(angle);
+    Vertices::calcVertices();
+}
+
+
 // simple print function to check init values
 void Vertices::print() {
     std::cout << this->polar.x() << " " << this->polar.y() << " " << this->polar.angle() << " " <<
@@ -64,4 +72,5 @@ void Vertices::printVertices() {
         std::cout << s->c_str() << " " << v[s->c_str()].x() << " " << v[s->c_str()].y() << std::endl;
     }
 }
+
 
