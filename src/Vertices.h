@@ -1,5 +1,6 @@
+// Calculate bounding rectangle vertices given a center point and an angle for a given height and width.
 //
-// Created by David Pointer on 7/13/17.
+// David Pointer <david.b.pointer@gmail.com>
 //
 
 #ifndef COORD_VERTICES_H
@@ -11,13 +12,13 @@
 
 class Vertices {
 
-    Polar polar;
-    double front;
-    double side;
-    Point front_left;
-    Point front_right;
-    Point rear_right;
-    Point rear_left;
+    Polar polar;          // x,y,angle for center of tank and angle normal to front of tank
+    double front;         // front dimension of tank (inches), does not change once instantiated
+    double side;          // side dimension of tank (inches), does not change once instantiated
+    Point front_left;     // calculated upper front left vertex point of bounding rectangle
+    Point front_right;    // calculated upper front right vertex point of bounding rectangle
+    Point rear_right;     // calculated lower rear right vertex point of bounding rectangle
+    Point rear_left;      // calculated lower rear left vertex point of bounding rectangle
 
     Point rotate(Point unrotated);
     void calcVertices();
@@ -33,6 +34,5 @@ public:
     void printVertices();
 
 };
-
 
 #endif //COORD_VERTICES_H

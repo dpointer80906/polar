@@ -1,17 +1,16 @@
-//
-// Created by David Pointer on 7/13/17.
-//
 #include <iostream>
 #include "Polar.h"
 #include "Vertices.h"
 #include <list>
 
+// default constructor
 Vertices::Vertices() {
     Vertices::front = 0.0;
     Vertices::side = 0.0;
     Vertices::calcVertices();
 }
 
+// detailed constructor
 Vertices::Vertices(double x, double y, double angle, double front, double side) {
     Vertices::polar.vector(x, y, angle);
     Vertices::front = front;
@@ -19,6 +18,7 @@ Vertices::Vertices(double x, double y, double angle, double front, double side) 
     Vertices::calcVertices();
 }
 
+// rotate a unrotated point by angle
 Point Vertices::rotate(Point unrotated) {
     double normX = unrotated.x() - polar.x();
     double normY = unrotated.y() - polar.y();
@@ -27,6 +27,7 @@ Point Vertices::rotate(Point unrotated) {
     return Point(primeX, primeY);
 }
 
+// given a center point and an angle, calculate a bounding rectangle vertices
 void Vertices::calcVertices() {
     Point unrotated_front_left(polar.x() - Vertices::front/2.0, polar.y() + Vertices::side/2.0);
     Point unrotated_front_right(polar.x() + Vertices::front/2.0, polar.y() + Vertices::side/2.0);
@@ -38,11 +39,7 @@ void Vertices::calcVertices() {
     Vertices::rear_left = Vertices::rotate(unrotated_rear_left);
 }
 
-void Vertices::print() {
-    std::cout << this->polar.x() << " " << this->polar.y() << " " << this->polar.angle() << " " <<
-              this->front << " " << this->side << std::endl;
-}
-
+// return the four current calculated bounding rectangle
 std::map<std::string, Point> Vertices::vertices() {
     return std::map<std::string, Point>{
             {"front_left", Vertices::front_left},
@@ -52,6 +49,13 @@ std::map<std::string, Point> Vertices::vertices() {
     };
 }
 
+// simple print function to check init values
+void Vertices::print() {
+    std::cout << this->polar.x() << " " << this->polar.y() << " " << this->polar.angle() << " " <<
+              this->front << " " << this->side << std::endl;
+}
+
+// print the four vertices of calculated bounding rectangle with corner labels
 void Vertices::printVertices() {
     std::string keys[] = {"front_left", "front_right", "rear_right", "rear_right"};
     std::list<std::string> keymap(keys, keys + sizeof(keys) / sizeof(*keys));

@@ -47,12 +47,14 @@ void Polar::vector(std::tuple<double, double, double> xya) {
     Polar::angle(angle);
 }
 
+// return the cosine of the current Angle
 double Polar::cosAngle() {
     double angle = (this->isDegrees()) ? this->getAngle() * 180.0/M_PI : this->getAngle();
     double cos_angle = cos(angle);
     return cos_angle;
 }
 
+// return the sine of the current Angle
 double Polar::sinAngle() {
     double angle = (this->isDegrees()) ? this->getAngle() * 180.0/M_PI : this->getAngle();
     double sin_angle = sin(angle);
