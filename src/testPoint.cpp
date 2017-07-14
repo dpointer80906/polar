@@ -18,8 +18,8 @@ int main() {
 void testPoint() {
     std::cout << "testPoint" << std::endl;
 
-    float x = 1.1;
-    float y = 2.1;
+    double x = 1.1;
+    double y = 2.1;
     Point coord(x, y);
     coord.print();
 
@@ -39,16 +39,16 @@ void testPolar() {
     std::cout << "testPolar" << std::endl;
     Polar *coord0 = new Polar();
     coord0->print();
-    float x = 1.1;
-    float y = 2.1;
-    float angle = 45.0;
+    double x = 1.1;
+    double y = 2.1;
+    double angle = 45.0;
     Polar coord1(x, y, angle);
     coord1.print();
     Polar coord2(std::make_tuple(x, y, angle));
     coord2.print();
     coord2.vector(&x, &y, &angle);
     std::cout << x << " " << y << " " << angle << std::endl;
-    std::tuple<float, float, float> xya = coord2.vector();
+    std::tuple<double, double, double> xya = coord2.vector();
     std::cout << std::get<0>(xya) << " " << std::get<1>(xya) << " " << std::get<2>(xya) << std::endl;
     std::cout << coord2.isDegrees() << std::endl;
     std::cout << coord2.isRadians() << std::endl;
@@ -63,13 +63,14 @@ void testVertices() {
     std::cout << "testVertices" << std::endl;
     Vertices *vertices = new Vertices();
     vertices->print();
-    float x = 11.1;
-    float y = 42.1;
-    float angle = 270.0;
-    float front = 2.6;
-    float side = 1.2;
+    double x = 11.1;
+    double y = 42.1;
+    double angle = 270.0;
+    double front = 2.6;
+    double side = 1.2;
     Vertices v1(x, y, angle, front, side);
     v1.print();
+    v1.printVertices();
 
 
 }

@@ -7,57 +7,57 @@ Point::Point() {
 }
 
 // separate x,y values constructor
-Point::Point(float x, float y) {
+Point::Point(double x, double y) {
     Point::setXY(std::make_tuple(x, y));
 }
 
 // x,y tuple constructor
-Point::Point(std::tuple<float, float> xy) {
+Point::Point(std::tuple<double, double> xy) {
     Point::setXY(xy);
 }
 
 // tuple x,y getter
-std::tuple<float, float> Point::xy() {
+std::tuple<double, double> Point::xy() {
     return Point::getXY();
 }
 
 // separate x,y values getter
-void Point::xy(float *x, float *y) {
+void Point::xy(double *x, double *y) {
     *x = Point::x();
     *y = Point::y();
 }
 
 // x getter
-float Point::x() {
+double Point::x() {
     return std::get<0>(Point::getXY());
 }
 
 // y getter
-float Point::y() {
+double Point::y() {
     return std::get<1>(Point::getXY());
 }
 
 // tuple x,y setter
-void Point::xy(std::tuple<float, float> xy) {
+void Point::xy(std::tuple<double, double> xy) {
     Point::setXY(xy);
 }
 
 // separate x,y value setter
-void Point::xy(float x, float y) {
+void Point::xy(double x, double y) {
     Point::x(x);
     Point::y(y);
 }
 
 // x setter
-void Point::x(float x) {
-    std::tuple<float, float> xy = Point::xy();
+void Point::x(double x) {
+    std::tuple<double, double> xy = Point::xy();
     std::get<0>(xy) = x;
     Point::xy(xy);
 }
 
 // y setter
-void Point::y(float y) {
-    std::tuple<float, float> xy = Point::xy();
+void Point::y(double y) {
+    std::tuple<double, double> xy = Point::xy();
     std::get<1>(xy) = y;
     Point::xy(xy);
 }

@@ -8,55 +8,55 @@ Polar::Polar(bool radians /* def false */ ) {
 }
 
 // distinct x,y,angle constructor
-Polar::Polar(float x, float y, float angle, bool radians /* def false */ ) {
+Polar::Polar(double x, double y, double angle, bool radians /* def false */ ) {
     Polar::vector(x, y, angle);
     Polar::Radians = radians;
 }
 
 // tuple constructor
-Polar::Polar(std::tuple<float, float, float> xya, bool radians /* def false */ ) {
+Polar::Polar(std::tuple<double, double, double> xya, bool radians /* def false */ ) {
     Polar::vector(xya);
     Polar::Radians = radians;
 }
 
 // distinct x,y,angle getter
-void Polar::vector(float *x, float *y, float *angle) {
+void Polar::vector(double *x, double *y, double *angle) {
     *x = Polar::x();
     *y = Polar::y();
     *angle = Polar::angle();
 }
 
 // tuple s,y,angle getter
-std::tuple<float, float, float> Polar::vector() {
-    std::tuple<float, float, float> xya = std::make_tuple(Polar::x(), Polar::y(), Polar::angle());
+std::tuple<double, double, double> Polar::vector() {
+    std::tuple<double, double, double> xya = std::make_tuple(Polar::x(), Polar::y(), Polar::angle());
     return xya;
 }
 
 // x,y,angle setter
-void Polar::vector(float x, float y, float angle) {
+void Polar::vector(double x, double y, double angle) {
     Polar::xy(x, y);
     Polar::angle(angle);
 }
 
 // tuple s,y,angle setter
-void Polar::vector(std::tuple<float, float, float> xya) {
-    float x = std::get<0>(xya);
-    float y = std::get<1>(xya);
-    float angle = std::get<2>(xya);
+void Polar::vector(std::tuple<double, double, double> xya) {
+    double x = std::get<0>(xya);
+    double y = std::get<1>(xya);
+    double angle = std::get<2>(xya);
     Polar::xy(x, y);
     Polar::angle(angle);
 }
 
-float Polar::cosAngle() {
+double Polar::cosAngle() {
     double angle = (this->isDegrees()) ? this->getAngle() * 180.0/M_PI : this->getAngle();
     double cos_angle = cos(angle);
-    return (float)cos_angle;
+    return cos_angle;
 }
 
-float Polar::sinAngle() {
+double Polar::sinAngle() {
     double angle = (this->isDegrees()) ? this->getAngle() * 180.0/M_PI : this->getAngle();
     double sin_angle = sin(angle);
-    return (float)sin_angle;
+    return sin_angle;
 }
 
 void Polar::print() {

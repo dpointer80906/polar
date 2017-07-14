@@ -10,31 +10,31 @@
 
 class Polar : public Point {
 
-    float Angle;  // vector angle from point
+    double Angle;  // vector angle from point
     bool Radians; // is Angle in radians or degrees? default: false (degrees)
 
-    float getAngle() { return Polar::Angle; }
-    void setAngle(float angle) {Polar::Angle = angle;}
+    double getAngle() { return Polar::Angle; }
+    void setAngle(double angle) {Polar::Angle = angle;}
 
 public:
 
     Polar(bool radians = false);
-    Polar(float x, float y, float angle, bool radians = false);
-    Polar(std::tuple<float, float, float> xya, bool radians = false);
+    Polar(double x, double y, double angle, bool radians = false);
+    Polar(std::tuple<double, double, double> xya, bool radians = false);
 
-    float angle() { return Polar::getAngle(); };
-    void vector(float *x, float *y, float *angle);
-    std::tuple<float, float, float> vector();
+    double angle() { return Polar::getAngle(); };
+    void vector(double *x, double *y, double *angle);
+    std::tuple<double, double, double> vector();
 
-    void angle(float angle) { Polar::setAngle(angle); };
-    void vector(float x, float y, float angle);
-    void vector(std::tuple<float, float, float> xya);
+    void angle(double angle) { Polar::setAngle(angle); };
+    void vector(double x, double y, double angle);
+    void vector(std::tuple<double, double, double> xya);
 
     bool isDegrees() { return !Polar::Radians; };
     bool isRadians() { return Polar::Radians; };
 
-    float cosAngle();
-    float sinAngle();
+    double cosAngle();
+    double sinAngle();
 
     void print();
 
