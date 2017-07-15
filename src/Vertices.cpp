@@ -56,21 +56,13 @@ void Vertices::update(double x, double y, double angle) {
     Vertices::calcVertices();
 }
 
-
 // simple print function to check init values
 void Vertices::print() {
-    std::cout << this->polar.x() << " " << this->polar.y() << " " << this->polar.angle() << " " <<
-              this->front << " " << this->side << std::endl;
-}
-
-// print the four vertices of calculated bounding rectangle with corner labels
-void Vertices::printVertices() {
-    std::string keys[] = {"front_left", "front_right", "rear_right", "rear_right"};
-    std::list<std::string> keymap(keys, keys + sizeof(keys) / sizeof(*keys));
-    std::map<std::string, Point> v = Vertices::vertices();
-    for(std::list<std::string>::const_iterator s = keymap.begin(); s != keymap.end(); ++s) {
-        std::cout << s->c_str() << " " << v[s->c_str()].x() << " " << v[s->c_str()].y() << std::endl;
+    std::cout << std::endl;
+    std::cout << "x: " << Vertices::polar.x() << " y: " << Vertices::polar.y() << " angle: " <<
+              Vertices::polar.angle() << " front: " << Vertices::front << " side: " << Vertices::side << std::endl;
+    //std::map<std::string, Point> vertices = Vertices::vertices();
+    for (auto &elt : Vertices::vertices()) {
+        std::cout << "  " << elt.first << ": " << elt.second.x() << " " << elt.second.y() << std::endl;
     }
 }
-
-

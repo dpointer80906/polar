@@ -33,7 +33,6 @@ public:
     void update(double x, double y, double angle);
 
     void print();
-    void printVertices();
 
 };
 
