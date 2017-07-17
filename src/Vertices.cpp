@@ -3,14 +3,20 @@
 #include "Vertices.h"
 #include <list>
 
-// default constructor
+/// default constructor
 Vertices::Vertices() {
     Vertices::front = 0.0;
     Vertices::side = 0.0;
     Vertices::calcVertices();
 }
 
-// detailed constructor
+/// detailed constructor
+///
+/// \param x
+/// \param y
+/// \param angle
+/// \param front
+/// \param side
 Vertices::Vertices(double x, double y, double angle, double front, double side) {
     Vertices::polar.vector(x, y, angle);
     Vertices::front = front;
@@ -18,7 +24,10 @@ Vertices::Vertices(double x, double y, double angle, double front, double side) 
     Vertices::calcVertices();
 }
 
-// rotate a unrotated point by angle
+/// rotate a unrotated point by angle
+///
+/// \param unrotated
+/// \return
 Point Vertices::rotate(Point unrotated) {
     double normX = unrotated.x() - polar.x();
     double normY = unrotated.y() - polar.y();
@@ -27,7 +36,7 @@ Point Vertices::rotate(Point unrotated) {
     return Point(primeX, primeY);
 }
 
-// given a center point and an angle, calculate a bounding rectangle vertices
+/// given a center point and an angle, calculate a bounding rectangle vertices
 void Vertices::calcVertices() {
     Point unrotated_front_left(polar.x() - Vertices::front/2.0, polar.y() + Vertices::side/2.0);
     Point unrotated_front_right(polar.x() + Vertices::front/2.0, polar.y() + Vertices::side/2.0);
@@ -39,7 +48,9 @@ void Vertices::calcVertices() {
     Vertices::rear_left = Vertices::rotate(unrotated_rear_left);
 }
 
-// return the four current calculated bounding rectangle
+/// return the four current calculated bounding rectangle
+///
+/// \return
 std::map<std::string, Point> Vertices::vertices() {
     return std::map<std::string, Point>{
             {"front_left", Vertices::front_left},
@@ -49,6 +60,10 @@ std::map<std::string, Point> Vertices::vertices() {
     };
 }
 
+///
+/// \param x
+/// \param y
+/// \param angle
 void Vertices::update(double x, double y, double angle) {
     Vertices::polar.x(x);
     Vertices::polar.y(y);
@@ -56,7 +71,7 @@ void Vertices::update(double x, double y, double angle) {
     Vertices::calcVertices();
 }
 
-// simple print function to check init values
+/// simple print function to check init values
 void Vertices::print() {
     std::cout << std::endl;
     std::cout << "x: " << Vertices::polar.x() << " y: " << Vertices::polar.y() << " angle: " <<

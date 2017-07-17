@@ -1,17 +1,22 @@
 #include <iostream>
 #include "Point.h"
 
-// default constructor
+/// default constructor
 Point::Point() {
     Point::setXY(std::make_tuple(0.0, 0.0));
 }
 
-// separate x,y values constructor
+/// separate x,y values constructor
+///
+/// \param x
+/// \param y
 Point::Point(double x, double y) {
     Point::setXY(std::make_tuple(x, y));
 }
 
-// x,y tuple constructor
+/// x,y tuple constructor
+///
+/// \param xy
 Point::Point(std::tuple<double, double> xy) {
     Point::setXY(xy);
 }

@@ -36,12 +36,12 @@ void testPoint() {
 }
 
 void testPolar() {
-    std::cout << "testPolar" << std::endl;
+    std::cout << std::endl << "testPolar" << std::endl;
     Polar *coord0 = new Polar();
     coord0->print();
-    double x = 1.1;
-    double y = 2.1;
-    double angle = 45.0;
+    double x = 5.3;
+    double y = 3.5;
+    double angle = 34.0;
     Polar coord1(x, y, angle);
     coord1.print();
     Polar coord2(std::make_tuple(x, y, angle));
@@ -61,18 +61,17 @@ void testPolar() {
 
 void testVertices() {
     std::cout << "testVertices" << std::endl;
-    Vertices *vertices = new Vertices();
-    vertices->print();
-    double x = 11.1;
-    double y = 42.1;
+    double x = 3.0;
+    double y = 3.0;
     double angle = 270.0;
-    double front = 2.6;
-    double side = 1.2;
-    Vertices v1(x, y, angle, front, side);
-    v1.print();
-    x = 22.3;
-    y = 41.4;
-    angle = 45.0;
-    v1.update(x, y, angle);
-    v1.print();
+    double front = 1.2;
+    double side = 2.5;
+    Vertices *vertices = new Vertices(x, y, angle, front, side);
+    vertices->print();
+    x = 5.3;
+    y = 3.5;
+    angle = 34.0;
+    vertices->update(x, y, angle);
+    vertices->print();
+
 }
