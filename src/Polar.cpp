@@ -1,67 +1,152 @@
-#include <iostream>
 #include "Polar.h"
 
-// default constructor
-Polar::Polar(bool radians /* def false */ ) {
-    Polar::angle(0.0);
-    Polar::Radians = radians;
+/*!
+ * Default constructor.
+ *
+ * @param radians   [in] angle in radians (true) or degrees (false) (default).
+ */
+Polar::Polar(bool r) {
+    vector(0.0, 0.0, 0.0);
+    setRadians(r);
 }
 
-// distinct x,y,angle constructor
-Polar::Polar(double x, double y, double angle, bool radians /* def false */ ) {
-    Polar::vector(x, y, angle);
-    Polar::Radians = radians;
+/*!
+ * Distinct x,y,angle value constructor.
+ *
+ * @param x     [in] initial x of polar coordinate.
+ * @param y     [in] initial y of polar coordinate.
+ * @param a     [in] initial angle of polar coordinate.
+ * @param r     [in] angle in radians (true) or degrees (false) (default).
+ */
+Polar::Polar(double x, double y, double a, bool r) {
+    vector(x, y, a);
+    setRadians(r);
 }
 
-// tuple constructor
-Polar::Polar(std::tuple<double, double, double> xya, bool radians /* def false */ ) {
-    Polar::vector(xya);
-    Polar::Radians = radians;
+/*!
+ * Tuple x,y,angle constructor.
+ *
+ * @param xya   [in] a tuple x,y,angle value for initialization.
+ * @param r     [in] angle in radians (true) or degrees (false) (default).
+ */
+Polar::Polar(tuple<double, double, double> xya, bool r) {
+    vector(xya);
+    setRadians(r);
 }
 
-// distinct x,y,angle getter
-void Polar::vector(double *x, double *y, double *angle) {
+/*!
+ * Distinct x,y,angle getter.
+ *
+ * @param x     [in, out] reference to returned x value of polar coordinate.
+ * @param y     [in, out] reference to returned y value of polar coordinate.
+ * @param a     [in, out] reference to returned angle value of polar coordinate.
+ */
+void Polar::vector(double *x, double *y, double *a) {
     *x = Polar::x();
     *y = Polar::y();
-    *angle = Polar::angle();
+    *a = angle();
 }
 
-// tuple s,y,angle getter
-std::tuple<double, double, double> Polar::vector() {
-    std::tuple<double, double, double> xya = std::make_tuple(Polar::x(), Polar::y(), Polar::angle());
-    return xya;
+/*!
+ * vAngle class variable proxy getter.
+ *
+ * @return the current value of vAngle.
+ */
+double Polar::angle() {
+    return getAngle();
 }
 
-// x,y,angle setter
-void Polar::vector(double x, double y, double angle) {
-    Polar::xy(x, y);
-    Polar::angle(angle);
+/*!
+ * Tuple s,y,angle getter.
+ *
+ * @return the current x,y,angle tuple values in this instance.
+ */
+tuple<double, double, double> Polar::vector() {
+    return make_tuple(x(), y(), angle());
 }
 
-// tuple s,y,angle setter
-void Polar::vector(std::tuple<double, double, double> xya) {
-    double x = std::get<0>(xya);
-    double y = std::get<1>(xya);
-    double angle = std::get<2>(xya);
-    Polar::xy(x, y);
-    Polar::angle(angle);
+/*!
+ * vAngle class variable proxy setter.
+ *
+ * @param [in] the new value of vAngle.
+ */
+void Polar::angle(double a) {
+    setAngle(a);
 }
 
-// return the cosine of the current Angle
+/*!
+ * Distinct x,y,angle value setter.
+ *
+ * @param x     [in] new x value of polar coordinate.
+ * @param y     [in] new y value of polar coordinate.
+ * @param a     [in] new angle value of polar coordinate.
+ */
+void Polar::vector(double x, double y, double a) {
+    xy(x, y);
+    angle(a);
+}
+
+/*!
+ * Tuple x,y,angle value setter.
+ *
+ * @param xya [in] Tuple of new x,y,angle values for this polar coordinate.
+ */
+void Polar::vector(tuple<double, double, double> xya) {
+    vector(get<0>(xya), get<1>(xya), get<2>(xya));
+}
+
+/*!
+ * Utility function to return cosine of current polar coordinate angle.
+ *
+ * @return the cosine of the current Angle.
+ */
 double Polar::cosAngle() {
-    double angle = (this->isDegrees()) ? this->getAngle() * M_PI/180.0 : this->getAngle();
-    double cos_angle = cos(angle);
-    return cos_angle;
+    double a = (isDegrees()) ? getAngle() * M_PI/180.0 : getAngle();
+    return cos(a);
 }
 
-// return the sine of the current Angle
+/*!
+ * Utility function to return sine of current polar coordinate angle.
+ *
+ * @return the sine of the current Angle.
+ */
 double Polar::sinAngle() {
-    double angle = (this->isDegrees()) ? this->getAngle() * M_PI/180.0 : this->getAngle();
-    double sin_angle = sin(angle);
-    return sin_angle;
+    double a = (isDegrees()) ? getAngle() * M_PI/180.0 : getAngle();
+    return sin(a);
 }
 
-///
+/*!
+ * Utility function: is angle in degrees?
+ *
+ * @return true if angle value in in degrees.
+ */
+bool Polar::isDegrees() {
+    return !getRadians();
+}
+
+/*!
+ * Utility function: is angle in radians?
+ *
+ * @return true if angle value in in radians.
+ */
+bool Polar::isRadians() {
+    return getRadians();
+}
+
+/*!
+ * Utility print function used to check current polar coordinate values.
+ */
 void Polar::print() {
-    std::cout << this->x() << " " << this->y() << " " << this->angle() << std::endl;
+    cout << "x: " << x() << " y: " << y() << " angle: " << getAngle() << endl;
+}
+
+/*!
+ * Utility print function used to print specified polar coordinate values.
+ *
+ * @param x [in] x coordinate to print.
+ * @param y [in] y coordinate to print.
+ * @param a [in] xangle value to print.
+ */
+void Polar::print(double x, double y, double a) {
+    cout << "x: " << x << " y: " << y << " angle: " << a << endl;
 }

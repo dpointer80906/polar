@@ -1,72 +1,122 @@
-#include <iostream>
 #include "Point.h"
 
-/// default constructor
+/*!
+ * Default constructor.
+ */
 Point::Point() {
-    Point::setXY(std::make_tuple(0.0, 0.0));
+    xy(make_tuple(0.0, 0.0));
 }
 
-/// separate x,y values constructor
-///
-/// \param x
-/// \param y
+/*!
+ * Separate x,y values constructor.
+ *
+ * @param x [in] the initial x axis value for this point.
+ * @param y [in] the initial y axis value for this point.
+ */
 Point::Point(double x, double y) {
-    Point::setXY(std::make_tuple(x, y));
+    xy(make_tuple(x, y));
 }
 
-/// x,y tuple constructor
-///
-/// \param xy
-Point::Point(std::tuple<double, double> xy) {
-    Point::setXY(xy);
+/*!
+ * Tuple x,y constructor.
+ */
+Point::Point(tuple<double, double> xy) {
+    Point::xy(xy);
 }
 
-// tuple x,y getter
-std::tuple<double, double> Point::xy() {
-    return Point::getXY();
+/*!
+ * Tuple x,y getter.
+ *
+ * @return the point x,y coordinate tuple.
+ */
+tuple<double, double> Point::xy() {
+    return getXY();
 }
 
-// separate x,y values getter
+/*!
+ * Separate x,y values getter.
+ *
+ * @param x  [in,out] the var reference for the x coordinate.
+ * @param y  [in,out] the var reference for the y coordinate.
+ */
 void Point::xy(double *x, double *y) {
     *x = Point::x();
     *y = Point::y();
 }
 
-// x getter
+/*!
+ * x coordinate getter.
+ *
+ * @return the x coordinate for this point instance.
+ */
 double Point::x() {
-    return std::get<0>(Point::getXY());
+    return get<0>(xy());
 }
 
-// y getter
+/*!
+ * y coordinate getter.
+ *
+ * @return the y coordinate for this point instance.
+ */
 double Point::y() {
-    return std::get<1>(Point::getXY());
+    return get<1>(xy());
 }
 
-// tuple x,y setter
-void Point::xy(std::tuple<double, double> xy) {
+/*!
+ * Tuple x,y setter.
+ *
+ * @param xy [in] tuple x,y value to set.
+ */
+void Point::xy(tuple<double, double> xy) {
     Point::setXY(xy);
 }
 
-// separate x,y value setter
+/*!
+ * Separate x,y value setter.
+ *
+ * @param x [in] new x coordinate to set.
+ * @param y [in] new y coordinate to set.
+ */
 void Point::xy(double x, double y) {
     Point::x(x);
     Point::y(y);
 }
 
-// x setter
+/*!
+ * x coordinate setter.
+ *
+ * @param x [in] the new x coordinate for this point.
+*/
 void Point::x(double x) {
-    std::tuple<double, double> xy = Point::xy();
-    std::get<0>(xy) = x;
+    tuple<double, double> xy = Point::xy();
+    get<0>(xy) = x;
     Point::xy(xy);
 }
 
-// y setter
-void Point::y(double y) {
-    std::tuple<double, double> xy = Point::xy();
-    std::get<1>(xy) = y;
+/*!
+ * y coordinate setter.
+ * 
+ * @param y [in] the new y coordinate for this point.
+*/
+ void Point::y(double y) {
+    tuple<double, double> xy = Point::xy();
+    get<1>(xy) = y;
     Point::xy(xy);
 }
 
+/*!
+ * Utility print function used to check current point coordinate values.
+ */
 void Point::print() {
-    std::cout << this->x() << " " << this->y() << std::endl;
+    cout << "x: " << x() << " y: " << y() << endl;
+}
+
+/*!
+ * Utility print function used to print coordinate values in the same manner as print().
+ *
+ * @param x [in] x coordinate value to print.
+ * @param y [in] y coordinate value to print.
+ */
+void Point::print(double x, double y) {
+    cout << "x: " << x << " y: " << y << endl;
 }

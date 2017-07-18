@@ -3,20 +3,24 @@
 #include "Polar.h"
 #include "Vertices.h"
 
+using namespace std;
+
 void testPoint();
 void testPolar();
 void testVertices();
 
 int main() {
-
     testPoint();
     testPolar();
     testVertices();
     return 0;
 }
 
+/*!
+ *
+ */
 void testPoint() {
-    std::cout << "testPoint" << std::endl;
+    cout << endl << "===== testPoint" << endl;
 
     double x = 1.1;
     double y = 2.1;
@@ -32,11 +36,14 @@ void testPoint() {
 
     coord.xy(65.4, 45.6);
     coord.xy(&x, &y);
-    std::cout << x << " " << y << std::endl;
+    coord.print(x, y);
 }
 
+/*!
+ *
+ */
 void testPolar() {
-    std::cout << std::endl << "testPolar" << std::endl;
+    cout << endl << "===== testPolar" << endl;
     Polar *coord0 = new Polar();
     coord0->print();
     double x = 5.3;
@@ -44,34 +51,36 @@ void testPolar() {
     double angle = 34.0;
     Polar coord1(x, y, angle);
     coord1.print();
-    Polar coord2(std::make_tuple(x, y, angle));
+    Polar coord2(make_tuple(x, y, angle));
     coord2.print();
     coord2.vector(&x, &y, &angle);
-    std::cout << x << " " << y << " " << angle << std::endl;
-    std::tuple<double, double, double> xya = coord2.vector();
-    std::cout << std::get<0>(xya) << " " << std::get<1>(xya) << " " << std::get<2>(xya) << std::endl;
-    std::cout << coord2.isDegrees() << std::endl;
-    std::cout << coord2.isRadians() << std::endl;
-    std::cout << coord0->isDegrees() << std::endl;
-    std::cout << coord0->isRadians() << std::endl;
+    coord2.print(x, y, angle);
+    tuple<double, double, double> xya = coord2.vector();
+    coord2.print(get<0>(xya), get<1>(xya), get<2>(xya));
+    cout << "degrees: " << boolalpha << coord2.isDegrees() << endl;
+    cout << "radians: " << boolalpha << coord2.isRadians() << endl;
+    cout << "degrees: " << boolalpha << coord0->isDegrees() << endl;
+    cout << "radians: " << boolalpha << coord0->isRadians() << endl;
     coord0 = new Polar(true);
-    std::cout << coord0->isDegrees() << std::endl;
-    std::cout << coord0->isRadians() << std::endl;
+    cout << "degrees: " << boolalpha << coord0->isDegrees() << endl;
+    cout << "radians: " << boolalpha << coord0->isRadians() << endl;
 }
 
+/*!
+ *
+ */
 void testVertices() {
-    std::cout << "testVertices" << std::endl;
+    cout << endl << "===== testVertices" << endl;
     double x = 3.0;
     double y = 3.0;
     double angle = 270.0;
     double front = 1.2;
     double side = 2.5;
-    Vertices *vertices = new Vertices(x, y, angle, front, side);
-    vertices->print();
+    Vertices vertices(Vertices(x, y, angle, front, side));
+    vertices.print();
     x = 5.3;
     y = 3.5;
     angle = 34.0;
-    vertices->update(x, y, angle);
-    vertices->print();
-
+    vertices.update(x, y, angle);
+    vertices.print();
 }

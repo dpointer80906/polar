@@ -1,83 +1,93 @@
-#include <iostream>
-#include "Polar.h"
 #include "Vertices.h"
-#include <list>
 
-/// default constructor
-Vertices::Vertices() {
-    Vertices::front = 0.0;
-    Vertices::side = 0.0;
-    Vertices::calcVertices();
+/*!
+ * Detailed constructor.
+ *
+ * No default constructor, front and side -must- be initialized at construction time.
+ *
+ * @param x         [in] initial x of polar coordinate.
+ * @param y         [in] initial y of polar coordinate.
+ * @param angle     [in] initial angle of polar coordinate, normal to "front".
+ * @param f         [in] constant width "front"
+ * @param s         [in] constant length "side"
+ */
+Vertices::Vertices(double x, double y, double angle, double f, double s) : front(f), side(s) {
+    polar.vector(x, y, angle);
+    calcVertices();
 }
 
-/// detailed constructor
-///
-/// \param x
-/// \param y
-/// \param angle
-/// \param front
-/// \param side
-Vertices::Vertices(double x, double y, double angle, double front, double side) {
-    Vertices::polar.vector(x, y, angle);
-    Vertices::front = front;
-    Vertices::side = side;
-    Vertices::calcVertices();
-}
-
-/// rotate a unrotated point by angle
-///
-/// \param unrotated
-/// \return
-Point Vertices::rotate(Point unrotated) {
+/*!
+ * Rotate from a starting point coordinate by angle degrees.
+ *
+ * First normalize the point to 0,0, execute the rotation by angle,
+ * the un-normalize the rotated point.
+ *
+ * @param unrotated     [in] the starting x,y point.
+ * @return A single point x,y coordinate moved by "angle" degrees.
+ */
+Point Vertices::rotatePoint(Point unrotated) {
     double normX = unrotated.x() - polar.x();
     double normY = unrotated.y() - polar.y();
-    double primeX = (normX * polar.cosAngle() - normY * polar.sinAngle()) + polar.x();
-    double primeY = (normY * polar.cosAngle() + normX * polar.sinAngle()) + polar.y();
-    return Point(primeX, primeY);
+    double rotX = normX * polar.cosAngle() - normY * polar.sinAngle();
+    double rotY = normY * polar.cosAngle() + normX * polar.sinAngle();
+    rotX += polar.x();
+    rotY += polar.y();
+    return Point(rotX, rotY);
 }
 
-/// given a center point and an angle, calculate a bounding rectangle vertices
+/*!
+ * Given a center point and an angle normal to "front", calculate bounding rectangle vertices.
+ *
+ * This is called after x,y,angle are changed (Vertices() and update()).
+ */
 void Vertices::calcVertices() {
-    Point unrotated_front_left(polar.x() - Vertices::front/2.0, polar.y() + Vertices::side/2.0);
-    Point unrotated_front_right(polar.x() + Vertices::front/2.0, polar.y() + Vertices::side/2.0);
-    Point unrotated_rear_right(polar.x() + Vertices::front/2.0, polar.y() - Vertices::side/2.0);
-    Point unrotated_rear_left(polar.x() - Vertices::front/2.0, polar.y() - Vertices::side/2.0);
-    Vertices::front_left = Vertices::rotate(unrotated_front_left);
-    Vertices::front_right = Vertices::rotate(unrotated_front_right);
-    Vertices::rear_right = Vertices::rotate(unrotated_rear_right);
-    Vertices::rear_left = Vertices::rotate(unrotated_rear_left);
+    double halfFront = front/2.0;
+    double halfSide = side/2.0;
+    Point unrotated_front_left(polar.x() - halfFront, polar.y() + halfSide);
+    Point unrotated_front_right(polar.x() + halfFront, polar.y() + halfSide);
+    Point unrotated_rear_right(polar.x() + halfFront, polar.y() - halfSide);
+    Point unrotated_rear_left(polar.x() - halfFront, polar.y() - halfSide);
+    frontLeft = Vertices::rotatePoint(unrotated_front_left);
+    frontRight = Vertices::rotatePoint(unrotated_front_right);
+    rearRight = Vertices::rotatePoint(unrotated_rear_right);
+    rearLeft = Vertices::rotatePoint(unrotated_rear_left);
 }
 
-/// return the four current calculated bounding rectangle
-///
-/// \return
-std::map<std::string, Point> Vertices::vertices() {
-    return std::map<std::string, Point>{
-            {"front_left", Vertices::front_left},
-            {"front_right", Vertices::front_right},
-            {"rear_right", Vertices::rear_right},
-            {"rear_left", Vertices::rear_left}
+/*!
+ * Return the four current calculated bounding rectangle vertex x,y coordinate.
+ *
+ * @return A map of vertex name to calculated vertex x,y point coordinates.
+ */
+map<string, Point> Vertices::vertices() {
+    return map<string, Point>{
+            {"frontLeft", frontLeft},
+            {"frontRight", frontRight},
+            {"rearRight", rearRight},
+            {"rearLeft", rearLeft}
     };
 }
 
-///
-/// \param x
-/// \param y
-/// \param angle
+/*!
+ * Update the polar coordinate x,y,angle values and recalculate the bounding rectangle vertex x,y coordinates.
+ *
+ * @param x         [in] the new x polar coordinate value.
+ * @param y         [in] the new x polar coordinate value.
+ * @param angle     [in] the new polar angle value.
+ */
 void Vertices::update(double x, double y, double angle) {
-    Vertices::polar.x(x);
-    Vertices::polar.y(y);
-    Vertices::polar.angle(angle);
-    Vertices::calcVertices();
+    polar.x(x);
+    polar.y(y);
+    polar.angle(angle);
+    calcVertices();
 }
 
-/// simple print function to check init values
+/*!
+ * Utility print function used to check init values & vertices.
+ */
 void Vertices::print() {
-    std::cout << std::endl;
-    std::cout << "x: " << Vertices::polar.x() << " y: " << Vertices::polar.y() << " angle: " <<
-              Vertices::polar.angle() << " front: " << Vertices::front << " side: " << Vertices::side << std::endl;
-    //std::map<std::string, Point> vertices = Vertices::vertices();
-    for (auto &elt : Vertices::vertices()) {
-        std::cout << "  " << elt.first << ": " << elt.second.x() << " " << elt.second.y() << std::endl;
+    cout << endl << "x: " << polar.x() << " y: " << polar.y() << " angle: " << polar.angle() <<
+         " front: " << front << " side: " << side << endl;
+    for (auto elt : vertices()) {
+        cout << "  " << elt.first << ": " << elt.second.x() << " " << elt.second.y() << endl;
     }
 }
