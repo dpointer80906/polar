@@ -4,111 +4,117 @@
  * Default constructor.
  */
 Point::Point() {
-    xy(make_tuple(0.0, 0.0));
+    this->setCoord(make_tuple(0.0, 0.0));
 }
 
 /*!
- * Separate x,y values constructor.
+ * Separate x,y constructor.
  *
- * @param x [in] the initial x axis value for this point.
- * @param y [in] the initial y axis value for this point.
+ * @param x [in] the initial x axis coordinate value.
+ * @param y [in] the initial y axis coordinate value.
  */
 Point::Point(double x, double y) {
-    xy(make_tuple(x, y));
+    this->setCoord(make_tuple(x, y));
 }
 
 /*!
  * Tuple x,y constructor.
  */
 Point::Point(tuple<double, double> xy) {
-    Point::xy(xy);
+    this->setCoord(xy);
 }
 
 /*!
  * Tuple x,y getter.
  *
- * @return the point x,y coordinate tuple.
+ * @return the x,y coordinate values.
  */
-tuple<double, double> Point::xy() {
-    return getXY();
+tuple<double, double> Point::getXY() {
+    return coord;
 }
 
 /*!
  * Separate x,y values getter.
  *
- * @param x  [in,out] the var reference for the x coordinate.
- * @param y  [in,out] the var reference for the y coordinate.
+ * @param x  [in,out] an x coordinate variable reference.
+ * @param y  [in,out] an coordinate variable reference.
  */
-void Point::xy(double *x, double *y) {
-    *x = Point::x();
-    *y = Point::y();
+void Point::getXY(double *x, double *y) {
+    *x = getX();
+    *y = getY();
 }
 
 /*!
- * x coordinate getter.
+ * Single x value getter.
  *
- * @return the x coordinate for this point instance.
+ * @return the x coordinate value.
  */
-double Point::x() {
-    return get<0>(xy());
+double Point::getX() {
+    return get<0>(getXY());
 }
 
 /*!
- * y coordinate getter.
+ * Single y value getter.
  *
- * @return the y coordinate for this point instance.
+ * @return the y coordinate value.
  */
-double Point::y() {
-    return get<1>(xy());
+double Point::getY() {
+    return get<1>(getXY());
+}
+
+/*!
+ * Private tuple x,y setter with range checking.
+ *
+ * Note the constructors call this method.
+ *
+ * @param xy [in] the new x,y coordinate values to set.
+ */
+void Point::setCoord(tuple<double, double> xy) {  // TODO error checking against expected max getX,getY.
+    this->coord = xy;
 }
 
 /*!
  * Tuple x,y setter.
  *
- * @param xy [in] tuple x,y value to set.
+ * @param xy [in] the new x,y coordinate values to set.
  */
-void Point::xy(tuple<double, double> xy) {
-    Point::setXY(xy);
+void Point::setXY(tuple<double, double> xy) {
+    setCoord(xy);
 }
 
 /*!
- * Separate x,y value setter.
+ * Separate x,y setter.
  *
- * @param x [in] new x coordinate to set.
- * @param y [in] new y coordinate to set.
+ * @param x [in] the new x coordinate value to set.
+ * @param y [in] the new y coordinate value to set.
  */
-void Point::xy(double x, double y) {
-    Point::x(x);
-    Point::y(y);
+void Point::setXY(double x, double y) {
+    setCoord(make_tuple(x, y));
 }
 
 /*!
- * x coordinate setter.
+ * Single value x setter.
  *
- * @param x [in] the new x coordinate for this point.
+ * @param x [in] the new x coordinate value to set.
 */
-void Point::x(double x) {
-    tuple<double, double> xy = Point::xy();
-    get<0>(xy) = x;
-    Point::xy(xy);
+void Point::setX(double x) {
+    setCoord(make_tuple(x, getY()));
 }
 
 /*!
- * y coordinate setter.
+ * Single value y setter.
  * 
- * @param y [in] the new y coordinate for this point.
+ * @param y [in] the new y coordinate value to set.
 */
- void Point::y(double y) {
-    tuple<double, double> xy = Point::xy();
-    get<1>(xy) = y;
-    Point::xy(xy);
+ void Point::setY(double y) {
+    setCoord(make_tuple(getX(), y));
 }
 
 /*!
  * Utility print function used to check current point coordinate values.
  */
 void Point::print() {
-    cout << "x: " << x() << " y: " << y() << endl;
+    cout << "point x: " << getX() << " y: " << getY() << endl;
 }
 
 /*!
@@ -118,5 +124,7 @@ void Point::print() {
  * @param y [in] y coordinate value to print.
  */
 void Point::print(double x, double y) {
-    cout << "x: " << x << " y: " << y << endl;
+    cout << "point x: " << x << " x: " << y << endl;
 }
+
+

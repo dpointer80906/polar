@@ -15,29 +15,28 @@ using namespace std;
  */
 class Point {
 
-    tuple<double, double> pxy;       ///< point x-axis and y-axis coordinates
+    tuple<double, double> coord;       ///< point x-axis, y-axis coordinates
 
-    tuple<double, double> getXY() { return pxy; }         ///< private getter
-    void setXY(tuple<double, double> xy) { pxy = xy; }    ///< private setter
+    void setCoord(tuple<double, double> xy);
 
 public:
 
     Point();
     Point(double x, double y);
-    Point(tuple<double, double> xy);
+    explicit Point(tuple<double, double> xy);
 
-    tuple<double, double> xy();
-    void xy(double *x, double *y);
-    double x();
-    double y();
+    tuple<double, double> getXY();
+    void getXY(double *x, double *y);
+    double getX();
+    double getY();
 
-    void xy(tuple<double, double> xy);
-    void xy(double x, double y);
-    void x(double x);
-    void y(double y);
+    void setXY(tuple<double, double> xy);
+    void setXY(double x, double y);
+    void setX(double x);
+    void setY(double y);
 
     virtual void print();
-    virtual void print(double x, double y);
+    void print(double x, double y);
 
 };
 
