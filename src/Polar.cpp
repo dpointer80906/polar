@@ -148,7 +148,7 @@ void Polar::setVector(tuple<double, double, double> xya) {
 /*!
  * Utility function to return cosine of current polar coordinate angle.
  *
- * @return the cosine of the current Angle.
+ * @return the cosine of the current angle in radians.
  */
 double Polar::cosAngle() {
     return cos(convertDegrees2Radians());
@@ -157,7 +157,7 @@ double Polar::cosAngle() {
 /*!
  * Utility function to return sine of current polar coordinate angle.
  *
- * @return the sine of the current Angle.
+ * @return the sine of the current angle in radians.
  */
 double Polar::sinAngle() {
     return sin(convertDegrees2Radians());

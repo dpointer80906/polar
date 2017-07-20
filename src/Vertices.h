@@ -15,22 +15,21 @@ using namespace std;
  */
 class Vertices {
 
-    Polar polar;            ///< x,y,angle polar coordinate, angle is normal to "front"
-    const double front;     ///< "front" width dimension
-    const double side;      ///< "side" width dimension
-    Point frontLeft;        ///< calculated upper front left vertex point of bounding rectangle
-    Point frontRight;       ///< calculated upper front right vertex point of bounding rectangle
-    Point rearRight;        ///< calculated lower rear right vertex point of bounding rectangle
-    Point rearLeft;         ///< calculated lower rear left vertex point of bounding rectangle
+    Polar polar;                    ///< x,y,angle polar coordinate, angle is normal to "front"
+    const double front;             ///< "front" width dimension
+    const double side;              ///< "side" width dimension
+    map<string, Point> vertices;    ///< four rectangular coords from vector, front, side
 
+    double getFront();
+    double getSide();
     Point rotatePoint(Point unrotated);
-    void calcVertices();
+    void setVertices();
 
 public:
 
-    Vertices(double x, double y, double angle, const double front, const double side);
+    Vertices(double x, double y, double angle, double front, double side);
 
-    std::map<std::string, Point> vertices();
+    std::map<std::string, Point> getVertices();
 
     void update(double x, double y, double angle);
 
