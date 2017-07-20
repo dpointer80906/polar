@@ -14,27 +14,26 @@ using namespace std;
  */
 class Polar : public Point {
 
-    double vAngle;      ///< vector angle from point
-    bool aRadians;      ///< is Angle in radians or degrees? default: false (degrees)
+    double angle;      ///< vector angle from point
+    bool radians;      ///< is vAngle in radians (true) or degrees (false)?
 
-    double getAngle() { return vAngle; }        ///< private getter
-    void setAngle(double a) { vAngle = a; }     ///< private setter
-    bool getRadians() { return aRadians; }      ///< private getter
-    void setRadians(bool r) { aRadians = r; }   ///< private setter
+    void setAngle(double a, bool r);
+    void checkAngle(double a, bool r);
+    double getAngle();
+    double convertDegrees2Radians();
+    bool getRadians();
 
 public:
 
-    Polar(bool radians = false);
-    Polar(double x, double y, double a, bool r = false);
-    Polar(tuple<double, double, double> xya, bool r = false);
+    Polar();
+    Polar(double x, double y, double a, bool r);
+    Polar(tuple<double, double, double> xya, bool r);
 
-    double angle();
-    void vector(double *x, double *y, double *a);
-    tuple<double, double, double> vector();
+    void getVector(double *x, double *y, double *a);
+    tuple<double, double, double> getVector();
 
-    void angle(double a);
-    void vector(double x, double y, double a);
-    void vector(tuple<double, double, double> xya);
+    void setVector(double x, double y, double a);
+    void setVector(tuple<double, double, double> xya);
 
     bool isDegrees();
     bool isRadians();
@@ -42,7 +41,7 @@ public:
     double cosAngle();
     double sinAngle();
 
-    void print();
+    void print() override;
     void print(double x, double y, double a);
 
 };

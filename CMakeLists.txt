@@ -3,5 +3,7 @@ project(Coord)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES src/testPoint.cpp src/Point.cpp src/Polar.cpp src/Polar.h src/Vertices.cpp src/Vertices.h)
-add_executable(Coord ${SOURCE_FILES})
+set(POINT_SOURCE_FILES src/Point.cpp src/testPoint.cpp)
+add_executable(Point ${POINT_SOURCE_FILES})
+set(POLAR_SOURCE_FILES src/Point.cpp src/Polar.cpp src/testPolar.cpp)
+add_executable(Polar ${POLAR_SOURCE_FILES})

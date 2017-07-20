@@ -114,7 +114,9 @@ void Point::setX(double x) {
  * Utility print function used to check current point coordinate values.
  */
 void Point::print() {
-    cout << "point x: " << getX() << " y: " << getY() << endl;
+    double x = getX();
+    double y = getY();
+    print(x, y);
 }
 
 /*!

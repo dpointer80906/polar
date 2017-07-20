@@ -1,18 +1,12 @@
 #include <iostream>
 #include "Point.h"
-#include "Polar.h"
-#include "Vertices.h"
 
 using namespace std;
 
 void testPoint();
-void testPolar();
-void testVertices();
 
 int main() {
     testPoint();
-    testPolar();
-    testVertices();
     return 0;
 }
 
@@ -21,66 +15,57 @@ int main() {
  */
 void testPoint() {
     cout << endl << "===== testPoint" << endl;
-
+    // constructors
     double x = 1.1;
     double y = 2.1;
-    Point coord(x, y);
-    coord.print();
+    Point coord;
+    Point coord0(x, y);
+    Point coord1(make_tuple(x, y));
+    cout << "coord "; coord.print();
+    cout << "coord0 "; coord0.print();
+    cout << "coord1 "; coord1.print();
 
-    coord.xy(5.5, 4.7);
-    coord.print();
-    coord.x(45.6);
-    coord.print();
-    coord.y(65.4);
-    coord.print();
+    // setters
+    x = 2.78;
+    y = 4.5;
+    coord.setX(x);
+    coord.setY(y);
+    coord0.setX(x+1.0);
+    coord0.setY(y+1.0);
+    coord1.setX(x+2.0);
+    coord1.setY(y+2.0);
+    cout << "coord "; coord.print();
+    cout << "coord0 "; coord0.print();
+    cout << "coord1 "; coord1.print();
+    x = 42.4;
+    y = 1.0;
+    coord.setXY(x, y);
+    coord0.setXY(x+1.0, y+1.0);
+    coord1.setXY(x+2.0, y+2.0);
+    cout << "coord "; coord.print();
+    cout << "coord0 "; coord0.print();
+    cout << "coord1 "; coord1.print();
+    x = 2.4;
+    y = 7.3;
+    coord.setXY(make_tuple(x, y));
+    coord0.setXY(make_tuple(x+1.0, y+1.0));
+    coord1.setXY(make_tuple(x+2.0, y+2.0));
+    cout << "coord "; coord.print();
+    cout << "coord0 "; coord0.print();
+    cout << "coord1 "; coord1.print();
 
-    coord.xy(65.4, 45.6);
-    coord.xy(&x, &y);
-    coord.print(x, y);
+    // getters
+    cout << "coord "; coord.print(coord.getX(), coord.getY());
+    cout << "coord0 "; coord.print(coord0.getX(), coord0.getY());
+    cout << "coord1 "; coord.print(coord1.getX(), coord1.getY());
+    cout << "coord "; coord.print(get<0>(coord.getXY()), get<1>(coord.getXY()));
+    cout << "coord0 "; coord.print(get<0>(coord0.getXY()), get<1>(coord0.getXY()));
+    cout << "coord1 "; coord.print(get<0>(coord1.getXY()), get<1>(coord1.getXY()));
+    coord.getXY(&x, &y);
+    cout << "coord "; coord.print(x, y);
+    coord0.getXY(&x, &y);
+    cout << "coord0 "; coord0.print(x, y);
+    coord1.getXY(&x, &y);
+    cout << "coord1 "; coord1.print(x, y);
 }
 
-/*!
- *
- */
-void testPolar() {
-    cout << endl << "===== testPolar" << endl;
-    Polar *coord0 = new Polar();
-    coord0->print();
-    double x = 5.3;
-    double y = 3.5;
-    double angle = 34.0;
-    Polar coord1(x, y, angle);
-    coord1.print();
-    Polar coord2(make_tuple(x, y, angle));
-    coord2.print();
-    coord2.vector(&x, &y, &angle);
-    coord2.print(x, y, angle);
-    tuple<double, double, double> xya = coord2.vector();
-    coord2.print(get<0>(xya), get<1>(xya), get<2>(xya));
-    cout << "degrees: " << boolalpha << coord2.isDegrees() << endl;
-    cout << "radians: " << boolalpha << coord2.isRadians() << endl;
-    cout << "degrees: " << boolalpha << coord0->isDegrees() << endl;
-    cout << "radians: " << boolalpha << coord0->isRadians() << endl;
-    coord0 = new Polar(true);
-    cout << "degrees: " << boolalpha << coord0->isDegrees() << endl;
-    cout << "radians: " << boolalpha << coord0->isRadians() << endl;
-}
-
-/*!
- *
- */
-void testVertices() {
-    cout << endl << "===== testVertices" << endl;
-    double x = 3.0;
-    double y = 3.0;
-    double angle = 270.0;
-    double front = 1.2;
-    double side = 2.5;
-    Vertices vertices(Vertices(x, y, angle, front, side));
-    vertices.print();
-    x = 5.3;
-    y = 3.5;
-    angle = 34.0;
-    vertices.update(x, y, angle);
-    vertices.print();
-}
