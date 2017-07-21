@@ -18,7 +18,7 @@ class Vertices {
     Polar polar;                    ///< x,y,angle polar coordinate, angle is normal to "front"
     const double front;             ///< "front" width dimension
     const double side;              ///< "side" width dimension
-    map<string, Point> vertices;    ///< four rectangular coords from vector, front, side
+    map<string, Point> vertices;    ///< four rectangular coordinates from vector, front, side
 
     double getFront();
     double getSide();
@@ -27,11 +27,10 @@ class Vertices {
 
 public:
 
-    Vertices(double x, double y, double angle, double front, double side);
+    Vertices(double x, double y, double angle, bool radians, double front, double side);
 
     std::map<std::string, Point> getVertices();
-
-    void update(double x, double y, double angle);
+    std::map<std::string, Point> update(double x, double y, double angle);
 
     void print();
 

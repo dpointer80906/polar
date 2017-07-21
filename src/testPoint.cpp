@@ -1,3 +1,8 @@
+/*!
+ * Simple quick test for Point class.
+ */
+// TODO make a real unit test, eh? Sheesh.
+
 #include <iostream>
 #include "Point.h"
 

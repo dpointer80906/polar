@@ -2,10 +2,11 @@
 
 /*!
  * Default constructor.
+ *
+ * @param r [in] angle class var in radians (true) or degrees (false).
  */
-Polar::Polar() {
-    this->setXY(0.0, 0.0);
-    this->setAngle(0.0, false);
+Polar::Polar(bool r) : radians(r) {
+    this->setAngle(0.0);
 }
 
 /*!
@@ -16,9 +17,9 @@ Polar::Polar() {
  * @param a     [in] initial angle of polar coordinate.
  * @param r     [in] angle in radians (true) or degrees (false).
  */
-Polar::Polar(double x, double y, double a, bool r) {
+Polar::Polar(double x, double y, double a, bool r) : radians(r) {
     this->setXY(x, y);
-    this->setAngle(a, r);
+    this->setAngle(a);
 }
 
 /*!
@@ -27,79 +28,28 @@ Polar::Polar(double x, double y, double a, bool r) {
  * @param xya   [in] a tuple x,y,angle value for initialization.
  * @param r     [in] angle in radians (true) or degrees (false).
  */
-Polar::Polar(tuple<double, double, double> xya, bool r) {
+Polar::Polar(tuple<double, double, double> xya, bool r) : radians(r) {
     this->setXY(get<0>(xya), get<1>(xya));
-    this->setAngle(get<2>(xya), r);
+    this->setAngle(get<2>(xya));
 }
 
 /*!
  * Angle setter.
  *
  * This method will set the new angle value and the new radians value if the angle
- * value is in the range range[0.0, 360.0] degrees. When called by a constructor,
- * rhw r param comes from the constructor arg list. When called by a method, the
- * r param is simply the current value of the class var radians. Kind of redundant,
- * sure, but this leads to less code which is hopefully easier to read.
- *
- * Also, there was a dependency that radians had to be set before setAngle() was
- * called. This method is the result of removing this dependency for the constructors.
+ * value is in the range range[0.0, 360.0] degrees.
  *
  * @param a [in] the proposed new angle value.
- * @param r [in] the proposed new radians value.
  */
-void Polar::setAngle(double a, bool r) {
-    try {
-        this->checkAngle(a, r);
-    }
-    catch (const char* msg) {     // TODO make specific exception
-        cerr << msg << endl;
+void Polar::setAngle(double a) {
+    long angle = lround(a * shift);
+    int upper = (getRadians()) ? (maxRadians * shift) : (maxDegrees * shift);
+    if((angle < minAngle) || (angle > upper)) {
+        cerr << "ERROR angle " << a << " " << angleUnits() << " rejected as invalid." << endl;
+        cerr << "angle " << " must be in the range" << angleRange() << endl;
         return;
     }
     this->angle = a;
-    this->radians = r;
-}
-
-/*!
- * Check that the desired value of the new angle is in range[0.0, 360.0] degrees.
- *
- * @param a [in] the angle value to check.
- * @throws
- */
-void Polar::checkAngle(double a, bool radians) {
-    const int shift = 100;
-    long angle = lround(a * shift);
-    int lower =  0;
-    int upper = (radians) ? 2*shift : 360*shift;
-    if((angle < lower) || (angle > upper)) {
-        throw "angle must be in the range[0.0, 360.0] degrees or range[0.0, 2.0] radians."; // TODO make specific exception
-    }
-}
-
-/*!
- * Angle getter.
- *
- * @return the current angle value.
- */
-double Polar::getAngle() {
-    return angle;
-}
-
-/*!
- * Convert angle in degrees to radians if appropriate.
- *
- * @return the current angle in radians.
- */
-double Polar::convertDegrees2Radians() {
-    return((isDegrees()) ? getAngle() * M_PI/180.0 : getAngle());
-}
-
-/*!
- * Radians getter.
- *
- * @return the current radians value.
- */
-bool Polar::getRadians() {
-    return radians;
 }
 
 /*!
@@ -127,13 +77,13 @@ tuple<double, double, double> Polar::getVector() {
 /*!
  * Distinct x,y,angle value setter.
  *
- * @param x     [in] new x value of polar coordinate.
- * @param y     [in] new y value of polar coordinate.
- * @param a     [in] new angle value of polar coordinate.
+ * @param x [in] new x value of polar coordinate.
+ * @param y [in] new y value of polar coordinate.
+ * @param a [in] new angle value of polar coordinate.
  */
 void Polar::setVector(double x, double y, double a) {
     setXY(x, y);
-    setAngle(a, getRadians());
+    setAngle(a);
 }
 
 /*!
@@ -143,42 +93,6 @@ void Polar::setVector(double x, double y, double a) {
  */
 void Polar::setVector(tuple<double, double, double> xya) {
     setVector(get<0>(xya), get<1>(xya), get<2>(xya));
-}
-
-/*!
- * Utility function to return cosine of current polar coordinate angle.
- *
- * @return the cosine of the current angle in radians.
- */
-double Polar::cosAngle() {
-    return cos(convertDegrees2Radians());
-}
-
-/*!
- * Utility function to return sine of current polar coordinate angle.
- *
- * @return the sine of the current angle in radians.
- */
-double Polar::sinAngle() {
-    return sin(convertDegrees2Radians());
-}
-
-/*!
- * Utility function: is angle in degrees?
- *
- * @return true if angle value in degrees.
- */
-bool Polar::isDegrees() {
-    return !getRadians();
-}
-
-/*!
- * Utility function: is angle in radians?
- *
- * @return true if angle value in radians.
- */
-bool Polar::isRadians() {
-    return getRadians();
 }
 
 /*!
@@ -196,6 +110,5 @@ void Polar::print() {
  * @param a [in] angle value to print.
  */
 void Polar::print(double x, double y, double a) {
-    string units = (isRadians()) ? "radians" : "degrees";
-    cout << "x: " << x << " y: " << y << " angle: " << a << " " << units << endl;
+    cout << "x: " << x << " y: " << y << " angle: " << a << " " << angleUnits() << endl;
 }

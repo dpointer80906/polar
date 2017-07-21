@@ -14,18 +14,23 @@ using namespace std;
  */
 class Polar : public Point {
 
-    double angle;      ///< vector angle from point
-    bool radians;      ///< is vAngle in radians (true) or degrees (false)?
+    double angle;                   ///< vector angle from point
+    const bool radians;             ///< is vAngle in radians (true) or degrees (false)?
+    const int minAngle = 0;         ///< used to check a new angle input
+    const int maxDegrees = 360;     ///< used to check a new angle input
+    const int maxRadians = 2;       ///< used to check a new angle input
+    const int shift = 100;          ///< used to shift a double 2 decimal places left for int comparison
 
-    void setAngle(double a, bool r);
-    void checkAngle(double a, bool r);
-    double getAngle();
-    double convertDegrees2Radians();
-    bool getRadians();
+    void setAngle(double a);
+    double getAngle() { return angle; }
+    double convertDegrees2Radians() { return (isDegrees()) ? getAngle() * M_PI/180.0 : getAngle(); };
+    bool getRadians() { return radians; }
+    string angleUnits() { return (isRadians()) ? "radians" : "degrees"; }
+    string angleRange() { return (isRadians()) ? "[0.0 : 2.0]" : "[0.0 : 360.0]"; }
 
 public:
 
-    Polar();
+    explicit Polar(bool r);
     Polar(double x, double y, double a, bool r);
     Polar(tuple<double, double, double> xya, bool r);
 
@@ -35,11 +40,11 @@ public:
     void setVector(double x, double y, double a);
     void setVector(tuple<double, double, double> xya);
 
-    bool isDegrees();
-    bool isRadians();
+    bool isDegrees() { return !getRadians(); }
+    bool isRadians() { return getRadians(); }
 
-    double cosAngle();
-    double sinAngle();
+    double cosAngle() { return cos(convertDegrees2Radians()); }
+    double sinAngle() { return sin(convertDegrees2Radians()); }
 
     void print() override;
     void print(double x, double y, double a);

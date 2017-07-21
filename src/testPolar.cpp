@@ -1,6 +1,8 @@
 /*!
- *
+ * Simple quick test for Polar class.
  */
+// TODO make a real unit test
+
 #include "Polar.h"
 
 using namespace std;
@@ -14,6 +16,8 @@ int main() {
 
 void testPolar() {
     cout << endl << "===== testPolar" << endl;
+    Polar sCoord(false);
+    cout << "sCoord "; sCoord.print();
     double x = 5.3;
     double y = 3.5;
     double angle = 34.0;
@@ -22,7 +26,7 @@ void testPolar() {
 
     coord.setVector(x+1.0, y+2.0, angle+3.0);
     Polar coord1(x, y, angle, false);
-    Polar coord2;
+    Polar coord2(false);
     coord2.setVector(make_tuple(x+5.0, y+5.0, angle+5.0));
     cout << "coord "; coord.print();
     cout << "coord1 "; coord1.print();

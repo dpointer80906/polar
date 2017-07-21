@@ -1,26 +1,21 @@
 #include "Vertices.h"
 
 /*!
- * Detailed constructor.
+ * Detailed constructor with degrees/radians control..
  *
  * No default constructor, front and side -must- be initialized at construction time.
  * Initialize the vector polar coord, the vertices map, then populate the verticews map.
  *
- * @param x         [in] initial x of polar coordinate.
- * @param y         [in] initial y of polar coordinate.
- * @param angle     [in] initial angle of polar coordinate, normal to "front".
- * @param f         [in] constant width "front"
- * @param s         [in] constant length "side"
+ * @param x     [in] initial x of polar coordinate.
+ * @param y     [in] initial y of polar coordinate.
+ * @param a     [in] initial angle of polar coordinate, normal to "front" (radians/degrees depends on "r" flag.
+ * @param r     [in] angle in radians (true) or in degrees (false).
+ * @param f     [in] constant width "front"
+ * @param s     [in] constant length "side"
  */
-Vertices::Vertices(double x, double y, double angle, double f, double s) : front(f), side(s) {
-    this->polar.setVector(x, y, angle);
-    this->vertices = map<string, Point>{
-            {"frontLeft", Point(0.0, 0.0)},
-            {"frontRight", Point(0.0, 0.0)},
-            {"rearRight", Point(0.0, 0.0)},
-            {"rearLeft", Point(0.0, 0.0)}
-    };
-    setVertices();
+Vertices::Vertices(double x, double y, double a, bool r, double f, double s) : front(f), side(s), polar(Polar(x, y, a, r)) {
+    this->vertices = map<string, Point>{ };
+    this->setVertices();
 }
 
 /*!
@@ -65,7 +60,6 @@ Point Vertices::rotatePoint(Point unrotated) {
  *
  * This is called after x,y,angle are changed (Vertices() and update()).
  *
- * TODO angle in radians or degrees?
  */
 void Vertices::setVertices() {
     double halfFront = getFront()/2.0;
@@ -95,10 +89,12 @@ map<string, Point> Vertices::getVertices() {
  * @param x         [in] the new x polar coordinate value.
  * @param y         [in] the new x polar coordinate value.
  * @param angle     [in] the new polar angle value.
+ * @return the updated bounding rectangle vertex x,y coordinates.
  */
-void Vertices::update(double x, double y, double angle) {
+std::map<std::string, Point> Vertices::update(double x, double y, double angle) {
     polar.setVector(x, y, angle);
     setVertices();
+    return getVertices();
 }
 
 /*!
@@ -113,3 +109,5 @@ void Vertices::print() {
         cout << "  " << elt.first << ": " << elt.second.getX() << " " << elt.second.getY() << endl;
     }
 }
+
+
