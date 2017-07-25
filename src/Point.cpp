@@ -126,7 +126,7 @@ void Point::print() {
  * @param y [in] y coordinate value to print.
  */
 void Point::print(double x, double y) {
-    cout << "point x: " << x << " x: " << y << endl;
+    cout << "point x: " << x << " y: " << y << endl;
 }
 
 
