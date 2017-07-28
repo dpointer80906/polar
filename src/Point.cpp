@@ -128,5 +128,3 @@ void Point::print() {
 void Point::print(double x, double y) {
     cout << "point x: " << x << " y: " << y << endl;
 }
-
-

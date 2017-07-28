@@ -44,6 +44,9 @@ TEST_CASE("Point.", "[Point]") {
         expected = {34.6, 42.42};
         Point coord1(make_tuple(expected.x, expected.y));
         checkPoint(&coord1, &expected);
+        coord.print();
+        coord0.print();
+        coord1.print();
     }
 
     SECTION("Single value x setter.") {

@@ -22,8 +22,8 @@ class Point {
 public:
 
     Point();
-    Point(double x, double y);
     explicit Point(tuple<double, double> xy);
+    Point(double x, double y);
 
     tuple<double, double> getXY();
     void getXY(double *x, double *y);
