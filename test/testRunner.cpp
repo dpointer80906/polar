@@ -148,7 +148,7 @@ TEST_CASE("Polar.", "[Polar]") {
         REQUIRE(sin(angle) == coord1.sinAngle());
     }
 
-    SECTION("Invalid setAngle() degrees.") {
+    SECTION("Try to set invalid setAngle() degrees.") {
         expected = {0.1, 0.2, 34.0};
         coord.setVector(expected.x, expected.y, expected.angle);
         REQUIRE(coord.isDegrees());
@@ -156,10 +156,79 @@ TEST_CASE("Polar.", "[Polar]") {
         coord.setVector(expected.x, expected.y, angle);
         checkPolar(&coord, &expected);
     }
+
+    SECTION("Try to set invalid setAngle() radians.") {
+        radians = true;
+        Polar coord1(radians);
+        REQUIRE(coord1.isRadians());
+        expected = {0.1, 0.2, 0.9};
+        coord1.setVector(expected.x, expected.y, expected.angle);
+        double angle = 2.0001;
+        coord1.setVector(expected.x, expected.y, angle);
+        checkPolar(&coord1, &expected);
+    }
+}
+
+/*!
+ *
+ *
+ * @param actual
+ * @param expected
+ */
+void checkVerticesEpsilon(Point actual, Point expected) {
+    double epsilon = 0.001;
+    double x = actual.getX() - expected.getX();
+    double y = actual.getY() - expected.getY();
+    REQUIRE(abs(x) < epsilon);
+    REQUIRE(abs(y) < epsilon);
+}
+
+/*!
+ * Check the expected Vertices class values.
+ *
+ * @param c [in] ptr to Polar class.
+ * @param e [in] map of expected values.
+ */
+void checkVertices(Vertices *c, std::map<std::string, Point> e) {
+    std::map<std::string, Point> actual = c->getVertices();
+    checkVerticesEpsilon(actual["frontLeft"], e["frontLeft"]);
+    checkVerticesEpsilon(actual["frontRight"], e["frontRight"]);
+    checkVerticesEpsilon(actual["rearRight"], e["rearRight"]);
+    checkVerticesEpsilon(actual["rearLeft"], e["rearLeft"]);
 }
 
 TEST_CASE("Vertices.", "[Vertices]") {
-    double x = 0.0;
-    double y = 0.0;
-    Vertices coord(x, y, 0.0, false, 1.5, 2.5);
+    double x = 3.0;
+    double y = 3.0;
+    double angle = 270.0;
+    bool radians = false;
+    double front = 1.2;
+    double side = 2.5;
+    Vertices coord(x, y, angle, radians, front, side);
+    std::map<std::string, Point> vertices;
+
+    SECTION("Constructor initial values.") {
+        vertices["frontLeft"] = Point(4.250, 3.600);
+        vertices["frontRight"] = Point(4.250, 2.400);
+        vertices["rearRight"] = Point(1.750, 2.400);
+        vertices["rearLeft"] = Point(1.750, 3.600);
+        checkVertices(&coord, vertices);
+    }
+
+    SECTION("Print vertices") {
+        coord.print();
+    }
+
+    SECTION("Update x,y,angle.") {
+        x = 3.5;
+        y = 5.3;
+        angle = 45.0;
+        coord.update(x, y, angle);
+        vertices["frontLeft"] = Point(2.192, 5.760);
+        vertices["frontRight"] = Point(3.040, 6.608);
+        vertices["rearRight"] = Point(4.808, 4.840);
+        vertices["rearLeft"] = Point(3.960, 3.992);
+        checkVertices(&coord, vertices);
+    }
+
 }
