@@ -14,12 +14,11 @@ using namespace std;
  */
 class Polar : public Point {
 
-    double angle;                   ///< vector angle from point
-    const bool radians;             ///< is vAngle in radians (true) or degrees (false)?
-    const int minAngle = 0;         ///< used to check a new angle input
-    const int maxDegrees = 360;     ///< used to check a new angle input
-    const int maxRadians = 2;       ///< used to check a new angle input
-    const int shift = 100;          ///< used to shift a double 2 decimal places left for int comparison
+    double angle;                       ///< vector angle from point
+    const bool radians;                 ///< is vAngle in radians (true) or degrees (false)?
+    const double minAngle = 0.0;        ///< used to check a new angle input
+    const double maxDegrees = 360.0;    ///< used to check a new angle input
+    const double maxRadians = 2.0;      ///< used to check a new angle input
 
     void setAngle(double a);
     double getAngle() { return angle; }

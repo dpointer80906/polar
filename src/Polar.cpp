@@ -37,19 +37,19 @@ Polar::Polar(tuple<double, double, double> xya, bool r) : radians(r) {
  * Angle setter.
  *
  * This method will set the new angle value if the angle
- * value is in the proper min, mxa range.
+ * value is in the proper min, max range.
  *
  * @param a [in] the proposed new angle value.
  */
-void Polar::setAngle(double a) {
-    long angle = lround(a) * shift;
-    int maxAngle = (getRadians()) ? (maxRadians * shift) : (maxDegrees * shift);
+void Polar::setAngle(double angle) {
+    double maxAngle = (getRadians()) ? maxRadians : maxDegrees;
     if((angle < minAngle) || (angle > maxAngle)) {
-        cerr << "ERROR angle " << a << " " << angleUnits() << " rejected as invalid." << endl;
+        cerr.precision(15);
+        cerr << "ERROR angle " << angle << " " << angleUnits() << " rejected as invalid." << endl;
         cerr << "angle " << " must be in the range" << angleRange() << endl;
         return;
     }
-    this->angle = a;
+    this->angle = angle;
 }
 
 /*!
