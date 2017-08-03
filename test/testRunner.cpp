@@ -170,10 +170,10 @@ TEST_CASE("Polar.", "[Polar]") {
 }
 
 /*!
+ * Compare actual to expected vertices with an epsilon.
  *
- *
- * @param actual
- * @param expected
+ * @param actual [in] actual map of values.
+ * @param expected [in] expected map of values.
  */
 void checkVerticesEpsilon(Point actual, Point expected) {
     double epsilon = 0.001;
