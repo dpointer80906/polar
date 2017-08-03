@@ -39,11 +39,11 @@ public:
     void setVector(double x, double y, double a);
     void setVector(tuple<double, double, double> xya);
 
-    bool isDegrees() { return !getRadians(); }
-    bool isRadians() { return getRadians(); }
+    bool isDegrees() { return !getRadians(); }  ///< returns true if this instance is using degrees for the angle.
+    bool isRadians() { return getRadians(); }   ///< returns true if this instance is using radians for the angle.
 
-    double cosAngle() { return cos(convertDegrees2Radians()); }
-    double sinAngle() { return sin(convertDegrees2Radians()); }
+    double cosAngle() { return cos(convertDegrees2Radians()); }  ///< return cos(angle) in radians.
+    double sinAngle() { return sin(convertDegrees2Radians()); }  ///< return sin(angle) in radians.
 
     void print() override;
     void print(double x, double y, double a);
